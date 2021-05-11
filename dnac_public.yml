@@ -1,0 +1,23 @@
+---
+- hosts: localhost
+  gather_facts: no
+  tasks:
+  - name: Authenticate with DNA Center
+    dnac_authentication:
+      username: "xxxxx"
+      password: "xxxxx"
+    register: authResult
+
+  - name: Print DNA Center Authentication Token
+    debug:
+      var: authResult.Token
+
+  - name: Retrieve Network Device from DNA Center
+    dnac_network_device:
+      dnacToken: "{{ authResult.Token }}"
+    register: networkDevice
+
+  - name: Print DNAC Network Devices
+    debug:
+      var: networkDevice
+      
